@@ -5,11 +5,8 @@
 function [x,y] = EulerMethod(f,xinit,xend,yinit,h)
     N = floor((xend-xinit)/h);
 
-    x = zeros(1, N+1);
-    y = zeros(1, N+1);
-
-    x(1) = xinit; 
-    y(1) = yinit;
+    x = [xinit zeros(1, N)];
+    y = [yinit zeros(1, N)];
 
     for i=1:N    
         x(i+1) = x(i)+h;    
