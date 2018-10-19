@@ -34,17 +34,21 @@ t2 = (asymptote+h):h:b;
 % Problem12.m specifies the equation dy/dx = 3xy + xy^2
 % Can be included as ''
 
+% calculate first step after asymptote
+asy_plus_h = (asymptote + h) ^ 2;
+after_asymptote = -1*(3*exp(3/2*(asy_plus_h)))./(exp(3/2*(asy_plus_h))-2);
+
 % EULER METHOD, before the asymptote and after
 [x1eul,y1eul] = EulerMethod('Problem12', a, asymptote, ya, h);
-[x2eul,y2eul] = EulerMethod('Problem12', asymptote+h, b, -15.2575, h); % -15.2575 = sol. at asymptote + h
+[x2eul,y2eul] = EulerMethod('Problem12', asymptote+h, b, after_asymptote, h); % -15.2575 = sol. at asymptote + h (h = 0.1)
 
 % IMPROVED EULER METHOD, before the asymptote and after
 [x1improved,y1improved] = ImprovedEulerMethod('Problem12', a, asymptote, ya, h);
-[x2improved,y2improved] = ImprovedEulerMethod('Problem12', asymptote+h, b, -15.2575, h);
+[x2improved,y2improved] = ImprovedEulerMethod('Problem12', asymptote+h, b, after_asymptote, h);
 
 % RUNGE-KUTTA METHOD, before the asymptote and after
 [x1rk, y1rk] = RungeKuttaMethod('Problem12', a, asymptote, ya, h);
-[x2rk, y2rk] = RungeKuttaMethod('Problem12', asymptote+h, b, -15.2575, h);
+[x2rk, y2rk] = RungeKuttaMethod('Problem12', asymptote+h, b, after_asymptote, h);
 
 % EXACT SOLUTION OF THE PROBLEM, before the asymptote and after
 sq1 = x1improved.^2;
@@ -64,8 +68,8 @@ plot(t1, y1improved, 'bx', 'LineWidth', 2);
 plot(t2, y2improved, 'bx', 'LineWidth', 2);
 
 % plot rk
-plot(t1, y1rk, 'y*', 'LineWidth', 2);
-plot(t2, y2rk, 'y*', 'LineWidth', 2);
+plot(t1, y1rk, 'm*', 'LineWidth', 2);
+plot(t2, y2rk, 'm*', 'LineWidth', 2);
 
 % plot exact solution
 plot(t1, yi1, 'g--', 'LineWidth', 2);
@@ -116,8 +120,8 @@ plot(t1, imp1err, 'bx', 'LineWidth', 2);
 plot(t2, imp2err, 'bx', 'LineWidth', 2);
 
 % runge kutta
-plot(t1, rk1err, 'y*', 'LineWidth', 2);
-plot(t2, rk2err, 'y*', 'LineWidth', 2);
+plot(t1, rk1err, 'm*', 'LineWidth', 2);
+plot(t2, rk2err, 'm*', 'LineWidth', 2);
 
 % add more information
 hold off;
